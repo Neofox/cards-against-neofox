@@ -1,0 +1,45 @@
+services:
+
+# MANAGERS
+    game.manager:
+        class: AppBundle\Resources\Services\Manager\GameManager
+        arguments:
+          - "@game.repository"
+          - "@player.repository"
+
+    player.manager:
+        class: AppBundle\Resources\Services\Manager\PlayerManager
+        arguments: ["@player.repository"]
+
+    deck.manager:
+        class: AppBundle\Resources\Services\Manager\DeckManager
+        arguments:
+          - "@deck.repository"
+          - "@card.repository"
+
+    card.manager:
+        class: AppBundle\Resources\Services\Manager\CardManager
+        arguments: ["@card.repository"]
+
+
+# REPOSITORIES
+
+    game.repository:
+        class: AppBundle\Repository\GameRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments: [AppBundle\Entity\Game]
+
+    player.repository:
+        class: AppBundle\Repository\PlayerRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments: [AppBundle\Entity\Player]
+
+    deck.repository:
+        class: AppBundle\Repository\DeckRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments: [AppBundle\Entity\Deck]
+
+    card.repository:
+        class: AppBundle\Repository\CardRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments: [AppBundle\Entity\Card]
